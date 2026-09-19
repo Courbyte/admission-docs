@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admission Document Filler — Fill, Preview & Print Admission Letters and Affidavits</title>
+<meta name="description" content="Free tool to fill in and print Nigerian university admission documents: Acceptance Letter, Guarantor's/Sponsor's Letter, Affidavit of Good Conduct, and Affidavit of Non-Membership of Secret Cult. Type your details once, preview the formatted document, then print or save as PDF.">
+<meta name="keywords" content="acceptance letter format, guarantor letter for university admission, affidavit of good conduct Nigeria, affidavit of non membership of secret cult, university admission documents, JAMB admission letter, Nigerian university affidavit template">
+<meta name="author" content="Coding With Courbyte">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Admission Document Filler — Fill, Preview & Print Admission Documents">
+<meta property="og:description" content="Fill your details once and instantly generate a properly formatted Acceptance Letter, Guarantor's Letter, or Affidavit for university admission — then print or save as PDF.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Admission Document Filler">
+<meta name="twitter:description" content="Fill, preview and print Nigerian university admission letters and affidavits in minutes.">
+<meta name="theme-color" content="#0B5D35">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#132A20;
+    --green:#0B5D35;
+    --green-deep:#08432669;
+    --paper:#FBFAF5;
+    --paper-line:#E4DCC4;
+    --gold:#A9822F;
+    --text:#22241D;
+    --muted:#5B5D52;
+    --caution:#A32A1E;
+    --caution-bg:#FBEAE7;
+    --panel:#F3F1E9;
+    --panel-border:#DCD6C2;
+    --shadow: 0 10px 30px rgba(19,42,32,0.14);
+    --radius: 3px;
+  }
+  :root:not([data-theme="light"]){ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EDEBE0;
+      --paper:#FBFAF5;
+      --text:#22241D;
+      --panel:#1B231D;
+      --panel-border:#33392E;
+      --muted:#B7B9AC;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EDEBE0;
+    --panel:#1B231D;
+    --panel-border:#33392E;
+    --muted:#B7B9AC;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--panel);
+    color: var(--text);
+    font-family:'Public Sans', system-ui, sans-serif;
+    min-height:100vh;
+  }
+
+  .topbar{
+    background: var(--ink);
+    color:#F4F2E7;
+    padding: 18px clamp(16px,4vw,40px);
+    display:flex;
+    align-items:center;
+    gap:14px;
+    border-bottom:3px solid var(--gold);
+  }
+  .topbar .seal{
+    width:40px;height:40px;border-radius:50%;
+    border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Spectral',serif;font-weight:700;font-size:16px;
+    color:var(--gold);
+    flex-shrink:0;
+  }
+  .topbar h1{
+    font-size:1.05rem;
+    margin:0;
+    font-weight:700;
+    letter-spacing:.2px;
+  }
+  .topbar p{
+    margin:2px 0 0;
+    font-size:.78rem;
+    color:#C9C7B9;
+  }
+
+  .app-shell{
+    max-width:1400px;
+    margin:0 auto;
+    padding:clamp(14px,3vw,28px);
+    display:grid;
+    grid-template-columns: minmax(300px,420px) 1fr;
+    gap:24px;
+    align-items:start;
+  }
+  @media (max-width: 920px){
+    .app-shell{grid-template-columns:1fr;}
+    .preview-panel{ position:static; }
+    .form-scroll{ max-height:none; }
+  }
+
+  .panel{
+    background: var(--paper);
+    border:1px solid var(--panel-border);
+    border-radius: var(--radius);
+  }
+
+  .control-panel{ padding:0; overflow:hidden; }
+
+  .doc-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  .doc-tab{
+    appearance:none; border:none; cursor:pointer;
+    background: var(--panel);
+    color: var(--text);
+    font-family:'Public Sans',sans-serif;
+    font-size:.78rem;
+    font-weight:600;
+    padding:14px 10px;
+    text-align:left;
+    border-bottom:3px solid transparent;
+    border-right:1px solid var(--panel-border);
+    line-height:1.3;
+    transition: background .15s ease, color .15s ease;
+  }
+  .doc-tab:nth-child(2n){border-right:none;}
+  .doc-tab span{display:block;font-size:.68rem;font-weight:500;color:var(--muted);margin-top:2px;}
+  .doc-tab.active{
+    background: var(--paper);
+    color: var(--green);
+    border-bottom-color: var(--green);
+  }
+  .doc-tab:hover:not(.active){ background:#EBE8DA; }
+
+  .form-scroll{
+    padding: 20px 20px 8px;
+    max-height: 62vh;
+    overflow-y:auto;
+  }
+  .form-scroll::-webkit-scrollbar{width:8px;}
+  .form-scroll::-webkit-scrollbar-thumb{background:var(--panel-border);border-radius:4px;}
+
+  .field-group{ margin-bottom:18px; }
+  .field-group legend{
+    font-size:.68rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color: var(--green);
+    font-weight:700;
+    margin:0 0 10px;
+    padding:0;
+    border:none;
+  }
+  .field{ margin-bottom:12px; }
+  .field label{
+    display:block;
+    font-size:.76rem;
+    font-weight:600;
+    margin-bottom:4px;
+    color: var(--text);
+  }
+  .field .hint{
+    font-size:.68rem;
+    color:var(--muted);
+    margin-top:3px;
+  }
+  .field input[type="text"],
+  .field input[type="date"],
+  .field input[type="tel"],
+  .field select,
+  .field textarea{
+    width:100%;
+    padding:9px 10px;
+    font-family:'Public Sans',sans-serif;
+    font-size:.85rem;
+    border:1px solid var(--panel-border);
+    border-radius:2px;
+    background:#fff;
+    color:var(--text);
+  }
+  .field textarea{ resize:vertical; min-height:56px; }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--green);
+    outline-offset:1px;
+  }
+  @media (max-width: 480px){
+    .field input[type="text"],
+    .field input[type="date"],
+    .field input[type="tel"],
+    .field select,
+    .field textarea{ font-size:16px; }
+  }
+
+  .caution{
+    margin:16px 20px 4px;
+    background: var(--caution-bg);
+    border:1px solid var(--caution);
+    border-left:5px solid var(--caution);
+    color:#5C120C;
+    padding:12px 14px;
+    font-size:.78rem;
+    line-height:1.45;
+    border-radius:2px;
+    display:flex;
+    gap:10px;
+  }
+  .caution .mark{
+    color:var(--caution);
+    font-weight:800;
+    font-size:1rem;
+    flex-shrink:0;
+  }
+  .caution strong{ color:#5C120C; }
+
+  .actions{
+    display:flex;
+    gap:10px;
+    padding:16px 20px 20px;
+    flex-wrap:wrap;
+  }
+  button.btn{
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    font-family:'Public Sans',sans-serif;
+    font-weight:700;
+    font-size:.82rem;
+    padding:11px 18px;
+    border-radius:2px;
+    transition: transform .08s ease, background .15s ease;
+  }
+  button.btn:active{ transform: translateY(1px); }
+  .btn-primary{ background: var(--green); color:#fff; flex:1; min-width:150px; }
+  .btn-primary:hover{ background:#08492A; }
+  .btn-secondary{ background:transparent; color:var(--text); border:1px solid var(--panel-border); }
+  .btn-secondary:hover{ background:#EBE8DA; }
+
+  .tip{
+    margin:0 20px 20px;
+    font-size:.72rem;
+    color:var(--muted);
+    line-height:1.5;
+    border-top:1px dashed var(--panel-border);
+    padding-top:12px;
+  }
+  .tip strong{ color:var(--text); }
+
+  /* preview */
+  .preview-panel{
+    position: sticky;
+    top: 16px;
+    padding:16px;
+  }
+  .preview-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .preview-toolbar h2{
+    font-size:.8rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--muted);
+    margin:0;
+    font-weight:700;
+  }
+  .zoom-controls{ display:flex; gap:6px; }
+  .zoom-controls button{
+    width:28px;height:28px;
+    border:1px solid var(--panel-border);
+    background:#fff;
+    cursor:pointer;
+    border-radius:2px;
+    font-size:.9rem;
+    line-height:1;
+  }
+
+  .paper-wrap{
+    display:flex;
+    justify-content:center;
+    overflow-x:auto;
+    padding: 10px 0 24px;
+  }
+  .paper{
+    background:#fff;
+    width:794px;
+    min-height:1123px;
+    padding: 76px 72px;
+    box-shadow: var(--shadow);
+    font-family:'Spectral', Georgia, serif;
+    font-size:14.5px;
+    line-height:1.7;
+    color:#181A14;
+    transform-origin: top center;
+    flex-shrink:0;
+  }
+  .paper .missing{
+    color:#B54A2A;
+    background:#FCEFE6;
+    padding:0 3px;
+    font-style:italic;
+  }
+  .paper .center{ text-align:center; }
+  .paper .right{ text-align:right; }
+  .paper .addr-block.right{
+    display:table;
+    margin-left:auto;
+    text-align:left;
+  }
+  .paper .bold{ font-weight:700; }
+  .paper .titlebold{
+    font-weight:700;
+    text-align:center;
+    text-decoration:underline;
+    margin: 22px 0 20px;
+    font-size:1.02rem;
+  }
+  .paper .courtline{
+    text-align:center;
+    font-weight:700;
+    margin:0 0 4px;
+  }
+  .paper p{ margin: 0 0 14px; }
+  .paper ol{ padding-left:20px; margin:0 0 14px; }
+  .paper ol li{ margin-bottom:12px; }
+  .paper .sigline{
+    margin-top:46px;
+    border-top:1px solid #333;
+    width:260px;
+  }
+  .paper .sig-label{ font-weight:700; margin-top:4px; }
+  .paper .addr-block{ margin-bottom: 22px; }
+  .paper .addr-block div{ margin:0; }
+
+  .site-footer{
+    max-width:1400px;
+    margin:0 auto;
+    padding: 10px clamp(16px,3vw,28px) 36px;
+    text-align:center;
+  }
+  .footer-inner p{
+    margin:6px 0;
+    font-size:.78rem;
+    color:var(--muted);
+  }
+  .footer-inner a{ color:var(--green); text-decoration:none; font-weight:600; }
+  .footer-inner a:hover{ text-decoration:underline; }
+  .footer-links{
+    display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin:8px 0;
+  }
+  .footer-links a{
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .footer-links svg{
+    width:15px; height:15px; fill:currentColor; flex-shrink:0;
+  }
+  .footer-copy{ color:var(--muted); font-size:.7rem !important; }
+
+  @media print{
+    .topbar, .control-panel, .preview-toolbar, .site-footer{ display:none !important; }
+    html, body{ height:auto !important; background:#fff !important; }
+    .app-shell{ display:block !important; max-width:none !important; padding:0 !important; margin:0 !important; }
+    .preview-panel{ position:static !important; padding:0 !important; border:none !important; }
+    .paper-wrap{ display:block !important; padding:0 !important; overflow:visible !important; }
+    .paper{
+      box-shadow:none !important;
+      width:100% !important;
+      min-height:0 !important;
+      padding: 0 !important;
+      margin:0 !important;
+      transform:none !important;
+    }
+    @page{ size:A4; margin:18mm 16mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="seal">AB</div>
+  <div>
+    <h1>Admission Document Filler</h1>
+    <p>Fill your details once, preview the letter, then print or save as PDF</p>
+  </div>
+</div>
+
+<div class="app-shell">
+
+  <!-- CONTROL PANEL -->
+  <div class="panel control-panel">
+    <div class="doc-tabs" id="docTabs"></div>
+
+    <form id="docForm" class="form-scroll"></form>
+
+    <div class="caution">
+      <span class="mark">&#9888;</span>
+      <div><strong>Before you print:</strong> check the spelling of your name, your registration number, course, faculty and every date on the document. Mistakes on an affidavit or letter you have already signed or sworn to are difficult and costly to correct.</div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="downloadBtn">Download document to print</button>
+      <button type="button" class="btn btn-secondary" id="printBtn">Try printing directly</button>
+      <button type="button" class="btn btn-secondary" id="resetBtn">Clear this form</button>
+    </div>
+    <div id="actionMsg" style="display:none;margin:-10px 20px 14px;font-size:.78rem;font-weight:600;"></div>
+
+    <div class="tip">
+      <strong>How this works:</strong> click "Download document to print" — it saves the finished letter as its own file. Open that downloaded file in your browser and it will pop up the print dialog automatically (or press Ctrl+P / Cmd+P). From there, choose <strong>Save as PDF</strong> as the destination if you want a PDF instead of paper, and turn on "Background graphics" for the cleanest layout. Your details stay in this browser only — nothing is uploaded anywhere.
+    </div>
+  </div>
+
+  <!-- PREVIEW PANEL -->
+  <div class="panel preview-panel">
+    <div class="preview-toolbar">
+      <h2 id="previewTitle">Live preview</h2>
+      <div class="zoom-controls">
+        <button type="button" id="zoomOut" title="Zoom out">&minus;</button>
+        <button type="button" id="zoomIn" title="Zoom in">+</button>
+      </div>
+    </div>
+    <div class="paper-wrap">
+      <div class="paper" id="paper"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>Built by <a href="https://wa.me/2349073056998" target="_blank" rel="noopener"><strong>Coding With Courbyte</strong></a> — Azakaye Courage, full-stack developer (frontend, backend, apps &amp; AI automation).</p>
+    <div class="footer-links">
+      <a href="mailto:codingwithcourbyte@gmail.com"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6Zm2 .24V18h16V6.24l-7.4 6.47a1 1 0 0 1-1.2 0L4 6.24Zm.86-.24L12 12.1 19.14 6H4.86Z"/></svg>Email</a>
+      <a href="https://wa.me/2349073056998" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35ZM12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26C2.16 6.45 6.6 2.01 12.05 2.01c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.89-9.88 9.89ZM20.46 3.5A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.31-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9a11.82 11.82 0 0 0-3.49-8.4Z"/></svg>WhatsApp</a>
+      <a href="https://github.com/Courbyte" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23.96-.27 1.98-.4 3-.4 1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.7.8.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12Z"/></svg>GitHub</a>
+      <a href="https://www.instagram.com/coding_with_courbyte/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.06 1.8.25 2.23.42.56.21.96.48 1.38.9.42.42.68.81.9 1.38.17.42.36 1.06.42 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.06 1.17-.25 1.8-.42 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.06-1.81-.25-2.24-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.42-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.06-1.17.26-1.81.42-2.23.21-.57.48-.96.9-1.38.42-.42.81-.69 1.38-.9.42-.16 1.05-.36 2.22-.42 1.28-.05 1.65-.06 4.86-.06ZM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38C1.35 2.68.93 3.35.62 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.55 2.91.3.79.71 1.46 1.38 2.13.66.66 1.33 1.08 2.13 1.38.75.29 1.63.49 2.9.55C8.33 24 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.9-.55.8-.3 1.47-.72 2.13-1.38.66-.67 1.08-1.34 1.38-2.13.29-.76.49-1.64.55-2.9.06-1.29.07-1.7.07-4.96s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.55-2.91-.3-.8-.72-1.47-1.38-2.13-.66-.66-1.33-1.08-2.13-1.38-.76-.3-1.64-.5-2.91-.55C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84ZM12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4Zm7.85-10.4a1.44 1.44 0 1 1-1.44-1.44 1.44 1.44 0 0 1 1.44 1.44Z"/></svg>Instagram</a>
+      <a href="https://x.com/coding_courbyte" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.96 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12Z"/></svg>X</a>
+    </div>
+    <p class="footer-copy">&copy; <span id="footerYear"></span> Azakaye Courage. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------------------------------------------------
+     Helpers
+  --------------------------------------------------------- */
+  function esc(str){
+    if(str === undefined || str === null) return "";
+    return String(str)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+  function ph(val, placeholderText){
+    var v = (val || "").toString().trim();
+    if(v) return esc(v);
+    return '<span class="missing">[' + esc(placeholderText) + ']</span>';
+  }
+  function upper(val, placeholderText){
+    var v = (val || "").toString().trim();
+    if(v) return esc(v.toUpperCase());
+    return '<span class="missing">[' + esc(placeholderText) + ']</span>';
+  }
+  function ordinal(n){
+    n = parseInt(n,10);
+    if(!n) return "";
+    var s=["th","st","nd","rd"], v=n%100;
+    return n + (s[(v-20)%10] || s[v] || s[0]);
+  }
+  function formatDate(iso){
+    if(!iso) return "";
+    var d = new Date(iso + "T00:00:00");
+    if(isNaN(d.getTime())) return "";
+    var months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+    return ordinal(d.getDate()) + " " + months[d.getMonth()] + ", " + d.getFullYear();
+  }
+  function nl2br(str){
+    return esc(str || "").replace(/\n/g,"<br>");
+  }
+  function addrLines(str, fallback, maxWords){
+    maxWords = maxWords || 5;
+    var v = (str||"").trim();
+    if(!v) return '<div class="missing">[' + esc(fallback) + ']</div>';
+    // Flatten however the person typed it (commas, line breaks, or both) into one
+    // stream of words, keeping any punctuation they typed, then re-wrap it to a
+    // fixed number of words per line — this is what keeps every line short and
+    // flush right, like a printed letterhead address, no matter how it was typed.
+    var flat = v.split("\n").map(function(l){ return l.trim(); }).filter(Boolean).join(" ");
+    var words = flat.split(/\s+/).filter(Boolean);
+    var lines = [];
+    for(var i=0; i<words.length; i+=maxWords){
+      lines.push(words.slice(i, i+maxWords).join(" "));
+    }
+    return lines.map(function(l){ return "<div>"+esc(l)+"</div>"; }).join("");
+  }
+
+  /* ---------------------------------------------------------
+     Field definitions per document
+  --------------------------------------------------------- */
+  var DOCS = {
+
+    acceptance: {
+      label: "Acceptance Letter",
+      sub: "Student → Registrar",
+      groups: [
+        { legend:"Your details", fields:[
+          {id:"studentName", label:"Full name (as on admission letter)", type:"text", placeholder:"e.g. Odiase Destiny Osagie"},
+          {id:"studentAddress", label:"Your home address", type:"textarea", placeholder:"One line per address line, e.g.\nNo 5, Ekae Street,\nOff Sapele Road,\nBenin City, Edo State", hint:"Type it as one line separated by commas, or press Enter for each line — either way it prints as separate address lines."},
+          {id:"letterDate", label:"Date of letter", type:"date"}
+        ]},
+        { legend:"Institution", fields:[
+          {id:"registrarInst", label:"University name", type:"text", placeholder:"e.g. University of Benin"},
+          {id:"registrarPMB", label:"P.M.B. / P.O. Box", type:"text", placeholder:"e.g. P.M.B. 1154"},
+          {id:"registrarCity", label:"City", type:"text", placeholder:"e.g. Benin City"},
+          {id:"registrarState", label:"State", type:"text", placeholder:"e.g. Edo State"}
+        ]},
+        { legend:"Programme", fields:[
+          {id:"course", label:"Course of study", type:"text", placeholder:"e.g. Political Science"},
+          {id:"faculty", label:"Faculty", type:"text", placeholder:"e.g. Social Sciences"},
+          {id:"uniFull", label:"University full name & location", type:"text", placeholder:"e.g. University of Benin, Benin City, Edo State"}
+        ]}
+      ],
+      render: function(d){
+        return ''
+        + '<div class="addr-block right">' + addrLines(d.studentAddress, "Your home address") + '<div>' + ph(formatDate(d.letterDate) || d.letterDate, "Date") + '</div></div>'
+        + '<p>The Registrar,<br>' + ph(d.registrarInst,"University name") + ',<br>'
+        + ph(d.registrarPMB,"P.M.B.") + ',<br>' + ph(d.registrarCity,"City") + ',<br>' + ph(d.registrarState,"State") + '.</p>'
+        + '<p>Dear Sir/Madam,</p>'
+        + '<div class="titlebold">ACCEPTANCE LETTER</div>'
+        + '<p>I, <span class="bold">' + upper(d.studentName,"STUDENT FULL NAME") + '</span> hereby accept the admission offered to me in this great University to study <span class="bold">' + upper(d.course,"COURSE") + '</span> in the Faculty of <span class="bold">' + upper(d.faculty,"FACULTY") + '</span> in the ' + ph(d.uniFull,"University full name and location") + '.</p>'
+        + '<p>I promise to be of good behavior and obey all the rules and regulation governing the institution throughout my stay in the university.</p>'
+        + '<p>Thank you.</p>'
+        + '<p>Yours faithfully,</p>'
+        + '<div class="sigline"></div>'
+        + '<p class="sig-label">' + upper(d.studentName,"STUDENT FULL NAME") + '</p>';
+      }
+    },
+
+    guarantor: {
+      label: "Guarantor's / Sponsor's Letter",
+      sub: "Guarantor → Registrar",
+      groups: [
+        { legend:"Guarantor's details", fields:[
+          {id:"gTitle", label:"Title", type:"select", options:["Mr.","Mrs.","Dr.","Chief","Engr.","Mallam","Prof."], placeholder:"Mr."},
+          {id:"gName", label:"Guarantor's full name", type:"text", placeholder:"e.g. Odiase Daniel"},
+          {id:"gPhone", label:"Guarantor's phone number", type:"tel", placeholder:"e.g. 08057872773"},
+          {id:"gAddress", label:"Guarantor's address", type:"textarea", placeholder:"One line per address line", hint:"Type it as one line separated by commas, or press Enter for each line — either way it prints as separate address lines."},
+          {id:"letterDate", label:"Date of letter", type:"date"}
+        ]},
+        { legend:"Relationship", fields:[
+          {id:"relation", label:"Guarantor is the student's", type:"select", options:["father","mother","guardian","uncle","aunt","sponsor"], placeholder:"father"},
+          {id:"wardWord", label:"Refer to student in the letter as", type:"select", options:["son","daughter","ward"], placeholder:"son"}
+        ]},
+        { legend:"Student & institution", fields:[
+          {id:"studentName", label:"Student's full name", type:"text", placeholder:"e.g. Odiase Destiny Osagie"},
+          {id:"course", label:"Course of study", type:"text", placeholder:"e.g. Political Science"},
+          {id:"faculty", label:"Faculty", type:"text", placeholder:"e.g. Social Sciences"},
+          {id:"uniFull", label:"University full name & location", type:"text", placeholder:"e.g. University of Benin, Benin City, Edo State"},
+          {id:"registrarInst", label:"University name (for address)", type:"text", placeholder:"e.g. University of Benin"},
+          {id:"registrarPMB", label:"P.M.B. / P.O. Box", type:"text", placeholder:"e.g. P.M.B. 1154"},
+          {id:"registrarCity", label:"City", type:"text", placeholder:"e.g. Benin City"},
+          {id:"registrarState", label:"State", type:"text", placeholder:"e.g. Edo State"}
+        ]}
+      ],
+      render: function(d){
+        var title = d.gTitle || "Mr.";
+        var relation = d.relation || "father";
+        var wardWord = d.wardWord || "son";
+        return ''
+        + '<div class="addr-block right">' + addrLines(d.gAddress, "Guarantor's address") + '<div>' + ph(formatDate(d.letterDate) || d.letterDate, "Date") + '</div></div>'
+        + '<p>The Registrar,<br>' + ph(d.registrarInst,"University name") + ',<br>'
+        + ph(d.registrarPMB,"P.M.B.") + ',<br>' + ph(d.registrarCity,"City") + ',<br>' + ph(d.registrarState,"State") + '.</p>'
+        + '<p>Dear Sir/Madam,</p>'
+        + '<div class="titlebold">GUARANTOR\'S/SPONSOR\'S LETTER</div>'
+        + '<p>I, <span class="bold">' + esc(title) + ' ' + upper(d.gName,"GUARANTOR FULL NAME") + '</span> hereby stand as a guarantor for my ' + esc(relation) + ' <span class="bold">' + upper(d.studentName,"STUDENT FULL NAME") + '</span> whom hereby accept the admission offered to him/her in this great University to study <span class="bold">' + upper(d.course,"COURSE") + '</span> in the Faculty of <span class="bold">' + upper(d.faculty,"FACULTY") + '</span> in the ' + ph(d.uniFull,"University full name and location") + '.</p>'
+        + '<p>I promise to answer for or identify with the University for any Default or otherwise financially that may arise from ' + (wardWord==="son"?"him":(wardWord==="daughter"?"her":"him/her")) + ' during the duration of ' + (wardWord==="son"?"his":(wardWord==="daughter"?"her":"their")) + ' studies in the university.</p>'
+        + '<p>I hope this undertaking shall be accepted by the school authority.</p>'
+        + '<p>Yours faithfully,</p>'
+        + '<div class="sigline"></div>'
+        + '<p class="sig-label">' + esc(title) + ' ' + upper(d.gName,"GUARANTOR FULL NAME") + '<br>' + ph(d.gPhone,"phone number") + '.</p>';
+      }
+    },
+
+    goodconduct: {
+      label: "Affidavit of Good Conduct",
+      sub: "Sworn at the Magistrate Court",
+      groups: [
+        { legend:"Court details", fields:[
+          {id:"courtState", label:"State", type:"text", placeholder:"e.g. Edo State"},
+          {id:"district", label:"Magisterial district", type:"text", placeholder:"e.g. Oregbeni Magisterial District"},
+          {id:"holdenAt", label:"Holden at", type:"text", placeholder:"e.g. Ogbeson Benin City"}
+        ]},
+        { legend:"Your details", fields:[
+          {id:"studentName", label:"Full name", type:"text", placeholder:"e.g. Odiase Destiny Osagie"},
+          {id:"gender", label:"Gender", type:"select", options:["Male","Female"], placeholder:"Male"},
+          {id:"religion", label:"Religion", type:"select", options:["Christian","Muslim","Traditional worshipper"], placeholder:"Christian"},
+          {id:"studentAddress", label:"Residential address", type:"textarea", placeholder:"e.g. No. 5, Ekae Street, Off Sapele Road, Benin City, Edo State"}
+        ]},
+        { legend:"Programme", fields:[
+          {id:"course", label:"Course of study", type:"text", placeholder:"e.g. Political Science"},
+          {id:"faculty", label:"Faculty", type:"text", placeholder:"e.g. Social Sciences"},
+          {id:"uniFull", label:"University full name", type:"text", placeholder:"e.g. University of Benin, Benin City"},
+          {id:"regNumber", label:"Registration number (leave blank if not yet issued)", type:"text", placeholder:"optional"}
+        ]},
+        { legend:"Sworn on (optional — often filled at the registry)", fields:[
+          {id:"swornDate", label:"Date sworn", type:"date"}
+        ]}
+      ],
+      render: function(d){
+        var g = (d.gender||"Male").toUpperCase();
+        var regLine = (d.regNumber||"").trim()
+          ? ' with Registration Number: <span class="bold">' + esc(d.regNumber) + '</span>.'
+          : ' with Registration Number: ______________________.';
+        var sworn = d.swornDate ? formatDate(d.swornDate) : "";
+        var swornParts = sworn ? sworn.split(" ") : ["______","______________","______"];
+        return ''
+        + '<div class="courtline">IN THE MAGISTRATE COURT ' + upper(d.courtState,"STATE") + ' OF NIGERIA</div>'
+        + '<div class="courtline">IN THE ' + upper(d.district,"MAGISTERIAL DISTRICT") + '</div>'
+        + '<div class="courtline">HOLDEN AT ' + upper(d.holdenAt,"HOLDEN AT LOCATION") + '</div>'
+        + '<div class="titlebold">AFFIDAVIT OF GOOD CONDUCT</div>'
+        + '<p>I, <span class="bold">' + upper(d.studentName,"FULL NAME") + ' (' + esc(g) + ')</span>, a ' + ph(d.religion,"religion") + ' and Citizen of the Federal Republic of Nigeria, residing at ' + ph(d.studentAddress,"residential address") + ', do depose an oath as follows:</p>'
+        + '<ol>'
+        + '<li>That I am a newly admitted student into ' + ph(d.uniFull,"university name") + ' to study <span class="bold">' + upper(d.course,"COURSE") + '</span> in the Faculty of <span class="bold">' + upper(d.faculty,"FACULTY") + '</span> in ' + ph(d.uniFull,"university name") + ',' + regLine + '</li>'
+        + '<li>That I hereby undertake to henceforth conduct myself in an orderly manner, to be law abiding and of good behavior, avoiding act(s) at variance with the ' + ph(d.uniFull,"university name") + ' rules and regulation.</li>'
+        + '<li>That the University shall be at liberty to take any necessary administrative disciplinary action it deems proper against me in the event of my default.</li>'
+        + '<li>That this affidavit is now needed for official and record purpose.</li>'
+        + '<li>That I make this affidavit for the information of the general public, and especially TO WHOM IT MAY CONCERN should please take note.</li>'
+        + '<li>That I make this affidavit in good faith believing same to be true and correct in accordance with the Statutory Declaration Law applicable in ' + ph(d.courtState,"state") + '.</li>'
+        + '</ol>'
+        + '<div class="sigline"></div>'
+        + '<p class="sig-label">DEPONENT</p>'
+        + '<p style="margin-top:36px;">SWORN TO AT THE ' + upper(d.holdenAt,"HOLDEN AT LOCATION") + " MAGISTRATE'S<br>REGISTRY, " + upper(d.holdenAt,"HOLDEN AT LOCATION") + '.</p>'
+        + '<p>This ' + (sworn? '<span class="bold">'+esc(swornParts[0])+'</span>' : '<span class="missing">[day]</span>') + ' day of ' + (sworn? '<span class="bold">'+esc(swornParts[1])+'</span>' : '<span class="missing">[month]</span>') + ' ' + (sworn? '<span class="bold">'+esc(swornParts[2])+'</span>' : '<span class="missing">[year]</span>') + '.</p>'
+        + '<div class="sigline"></div>'
+        + '<p class="sig-label">BEFORE ME</p>'
+        + '<div class="sigline"></div>'
+        + '<p class="sig-label">COMMISSIONER FOR OATHS</p>';
+      }
+    },
+
+    noncult: {
+      label: "Affidavit of Non-Membership of Secret Cult",
+      sub: "Sworn at the Magistrate Court",
+      groups: [
+        { legend:"Court details", fields:[
+          {id:"courtState", label:"State", type:"text", placeholder:"e.g. Edo State"},
+          {id:"district", label:"Magisterial district", type:"text", placeholder:"e.g. Oregbeni Magisterial District"},
+          {id:"holdenAt", label:"Holden at", type:"text", placeholder:"e.g. Ogbeson Benin City"}
+        ]},
+        { legend:"Your details", fields:[
+          {id:"studentName", label:"Full name", type:"text", placeholder:"e.g. Odiase Destiny Osagie"},
+          {id:"gender", label:"Gender", type:"select", options:["Male","Female"], placeholder:"Male"},
+          {id:"religion", label:"Religion", type:"select", options:["Christian","Muslim","Traditional worshipper"], placeholder:"Christian"},
+          {id:"studentAddress", label:"Residential address", type:"textarea", placeholder:"e.g. No. 5, Ekae Street, Off Sapele Road, Benin City, Edo State"}
+        ]},
+        { legend:"Programme", fields:[
+          {id:"level", label:"Level", type:"text", placeholder:"e.g. 100"},
+          {id:"mode", label:"Study mode", type:"select", options:["Full-Time","Part-Time"], placeholder:"Full-Time"},
+          {id:"course", label:"Course of study", type:"text", placeholder:"e.g. Political Science"},
+          {id:"faculty", label:"Faculty", type:"text", placeholder:"e.g. Social Sciences"},
+          {id:"uniFull", label:"University full name", type:"text", placeholder:"e.g. University of Benin, Benin City"},
+          {id:"regNumber", label:"Registration number", type:"text", placeholder:"e.g. 202660799809GE"}
+        ]},
+        { legend:"Sworn on (optional — often filled at the registry)", fields:[
+          {id:"swornDate", label:"Date sworn", type:"date"}
+        ]}
+      ],
+      render: function(d){
+        var g = (d.gender||"Male").toUpperCase();
+        var sworn = d.swornDate ? formatDate(d.swornDate) : "";
+        var swornParts = sworn ? sworn.split(" ") : ["______","______________","______"];
+        return ''
+        + '<div class="courtline">IN THE MAGISTRATE COURT ' + upper(d.courtState,"STATE") + ' OF NIGERIA</div>'
+        + '<div class="courtline">IN THE ' + upper(d.district,"MAGISTERIAL DISTRICT") + '</div>'
+        + '<div class="courtline">HOLDEN AT ' + upper(d.holdenAt,"HOLDEN AT LOCATION") + '</div>'
+        + '<div class="titlebold">AFFIDAVIT OF NON-MEMBERSHIP OF SECRET CULT</div>'
+        + '<p>I, <span class="bold">' + upper(d.studentName,"FULL NAME") + ' (' + esc(g) + ')</span>, a ' + ph(d.religion,"religion") + ' and Citizen of the Federal Republic of Nigeria, residing at ' + ph(d.studentAddress,"residential address") + ', do depose an oath as follows:</p>'
+        + '<ol>'
+        + '<li>That I am the above named person and the deponent herein.</li>'
+        + '<li>That I am a ' + ph(d.level,"level") + ' Level <span class="bold">(' + upper(d.mode,"FULL-TIME/PART-TIME") + ')</span> Student of the department of <span class="bold">' + upper(d.course,"COURSE") + '</span> in the Faculty of <span class="bold">' + upper(d.faculty,"FACULTY") + '</span> in ' + ph(d.uniFull,"university name") + ', with Registration Number: <span class="bold">' + ph(d.regNumber,"registration number") + '</span>.</li>'
+        + '<li>That I am aware of the Cult Renunciation Committee recently inaugurated by the Pro-Chancellor and Chairman of the governing Council of ' + upper(d.uniFull,"UNIVERSITY NAME") + '.</li>'
+        + '<li>That I have never been a member or sponsor of any secret-cult.</li>'
+        + '<li>That I will never aid or abet the activities of any secret-cult.</li>'
+        + '<li>That from the rules and regulation of the university, I am aware membership of any secret-cult is incompatible with my status as a student of ' + upper(d.uniFull,"UNIVERSITY NAME") + '.</li>'
+        + '<li>That the University is at liberty to invoke necessary disciplinary action against me for any acts unbecoming of a student of the university.</li>'
+        + '<li>That I make this affidavit in good faith believing same to be true and correct in accordance with the Statutory Declaration Law applicable in ' + ph(d.courtState,"state") + '.</li>'
+        + '</ol>'
+        + '<div class="sigline"></div>'
+        + '<p class="sig-label">DEPONENT</p>'
+        + '<p style="margin-top:36px;">SWORN TO AT THE ' + upper(d.holdenAt,"HOLDEN AT LOCATION") + " MAGISTRATE'S<br>REGISTRY, " + upper(d.holdenAt,"HOLDEN AT LOCATION") + '.</p>'
+        + '<p>This ' + (sworn? '<span class="bold">'+esc(swornParts[0])+'</span>' : '<span class="missing">[day]</span>') + ' day of ' + (sworn? '<span class="bold">'+esc(swornParts[1])+'</span>' : '<span class="missing">[month]</span>') + ' ' + (sworn? '<span class="bold">'+esc(swornParts[2])+'</span>' : '<span class="missing">[year]</span>') + '.</p>'
+        + '<div class="sigline"></div>'
+        + '<p class="sig-label">BEFORE ME</p>'
+        + '<div class="sigline"></div>'
+        + '<p class="sig-label">COMMISSIONER FOR OATHS</p>';
+      }
+    }
+  };
+
+  var DOC_ORDER = ["acceptance","guarantor","goodconduct","noncult"];
+
+  /* ---------------------------------------------------------
+     State
+  --------------------------------------------------------- */
+  var STORE_KEY = "admission-doc-filler-v1";
+  var state = { active: DOC_ORDER[0], data: {} };
+  DOC_ORDER.forEach(function(k){ state.data[k] = {}; });
+
+  try{
+    var saved = localStorage.getItem(STORE_KEY);
+    if(saved){
+      var parsed = JSON.parse(saved);
+      if(parsed && parsed.data){
+        DOC_ORDER.forEach(function(k){
+          state.data[k] = Object.assign({}, state.data[k], parsed.data[k] || {});
+        });
+      }
+      if(parsed && parsed.active && DOCS[parsed.active]) state.active = parsed.active;
+    }
+  }catch(e){ /* storage unavailable — continue with blank form */ }
+
+  function persist(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+    catch(e){ /* ignore quota/availability errors */ }
+  }
+
+  /* ---------------------------------------------------------
+     Build tabs
+  --------------------------------------------------------- */
+  var tabsEl = document.getElementById("docTabs");
+  DOC_ORDER.forEach(function(key){
+    var def = DOCS[key];
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "doc-tab" + (key===state.active ? " active":"");
+    btn.dataset.key = key;
+    btn.innerHTML = def.label + "<span>" + def.sub + "</span>";
+    btn.addEventListener("click", function(){
+      state.active = key;
+      persist();
+      renderAll();
+    });
+    tabsEl.appendChild(btn);
+  });
+
+  /* ---------------------------------------------------------
+     Build form for active doc
+  --------------------------------------------------------- */
+  var formEl = document.getElementById("docForm");
+
+  function buildForm(){
+    var def = DOCS[state.active];
+    var data = state.data[state.active];
+    formEl.innerHTML = "";
+
+    def.groups.forEach(function(group){
+      var fs = document.createElement("fieldset");
+      fs.className = "field-group";
+      fs.style.border = "none";
+      var legend = document.createElement("legend");
+      legend.textContent = group.legend;
+      fs.appendChild(legend);
+
+      group.fields.forEach(function(f){
+        var wrap = document.createElement("div");
+        wrap.className = "field";
+
+        var label = document.createElement("label");
+        label.setAttribute("for", state.active + "_" + f.id);
+        label.textContent = f.label;
+        wrap.appendChild(label);
+
+        var input;
+        if(f.type === "textarea"){
+          input = document.createElement("textarea");
+        } else if(f.type === "select"){
+          input = document.createElement("select");
+          var blank = document.createElement("option");
+          blank.value = "";
+          blank.textContent = "Select " + f.label.toLowerCase() + "…";
+          input.appendChild(blank);
+          f.options.forEach(function(opt){
+            var o = document.createElement("option");
+            o.value = opt; o.textContent = opt;
+            input.appendChild(o);
+          });
+        } else {
+          input = document.createElement("input");
+          input.type = f.type;
+        }
+        input.id = state.active + "_" + f.id;
+        input.name = f.id;
+        if(f.placeholder && f.type !== "select") input.placeholder = f.placeholder;
+        if(data[f.id] !== undefined) input.value = data[f.id];
+
+        input.addEventListener("input", function(){
+          data[f.id] = input.value;
+          persist();
+          renderPreview();
+        });
+        input.addEventListener("change", function(){
+          data[f.id] = input.value;
+          persist();
+          renderPreview();
+        });
+
+        wrap.appendChild(input);
+
+        if(f.hint){
+          var hint = document.createElement("div");
+          hint.className = "hint";
+          hint.textContent = f.hint;
+          wrap.appendChild(hint);
+        }
+
+        fs.appendChild(wrap);
+      });
+
+      formEl.appendChild(fs);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Render preview
+  --------------------------------------------------------- */
+  var paperEl = document.getElementById("paper");
+  var titleEl = document.getElementById("previewTitle");
+
+  function renderPreview(){
+    var def = DOCS[state.active];
+    var data = state.data[state.active];
+    paperEl.innerHTML = def.render(data);
+    titleEl.textContent = "Live preview — " + def.label;
+  }
+
+  function renderAll(){
+    Array.prototype.forEach.call(tabsEl.children, function(btn){
+      btn.classList.toggle("active", btn.dataset.key === state.active);
+    });
+    buildForm();
+    renderPreview();
+  }
+
+  /* ---------------------------------------------------------
+     Standalone printable document (for reliable download+print,
+     since window.print() from inside the embedded preview can be
+     silently blocked by the host frame)
+  --------------------------------------------------------- */
+  var STANDALONE_CSS = ""
+    + "@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');"
+    + "*{box-sizing:border-box;} body{margin:0;background:#787672;display:flex;justify-content:center;padding:28px 12px;font-family:'Spectral',Georgia,serif;}"
+    + ".paper{background:#fff;width:794px;max-width:100%;min-height:1123px;padding:76px 72px;box-shadow:0 10px 30px rgba(0,0,0,.35);font-size:14.5px;line-height:1.7;color:#181A14;}"
+    + ".missing{color:#B54A2A;background:#FCEFE6;padding:0 3px;font-style:italic;}"
+    + ".center{text-align:center;} .right{text-align:right;} .bold{font-weight:700;}"
+    + ".addr-block.right{display:table;margin-left:auto;text-align:left;}"
+    + ".titlebold{font-weight:700;text-align:center;text-decoration:underline;margin:22px 0 20px;font-size:1.02rem;}"
+    + ".courtline{text-align:center;font-weight:700;margin:0 0 4px;}"
+    + "p{margin:0 0 14px;} ol{padding-left:20px;margin:0 0 14px;} ol li{margin-bottom:12px;}"
+    + ".sigline{margin-top:46px;border-top:1px solid #333;width:260px;} .sig-label{font-weight:700;margin-top:4px;}"
+    + ".addr-block{margin-bottom:22px;} .addr-block div{margin:0;}"
+    + "@media print{ body{background:#fff;padding:0;display:block;} .paper{box-shadow:none;width:100%;min-height:0;padding:0;margin:0;} @page{size:A4;margin:18mm 16mm;} }";
+
+  function buildStandaloneHTML(){
+    var def = DOCS[state.active];
+    var data = state.data[state.active];
+    var content = def.render(data);
+    return "<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
+      + "<title>" + esc(def.label) + "</title>"
+      + "<style>" + STANDALONE_CSS + "</style></head><body>"
+      + "<div class=\"paper\">" + content + "</div>"
+      + "<script>window.addEventListener('load',function(){ setTimeout(function(){ try{ window.print(); }catch(e){} }, 350); });<\/script>"
+      + "</body></html>";
+  }
+
+  /* ---------------------------------------------------------
+     Downloads capability (per-viewer file save, granted by the host)
+  --------------------------------------------------------- */
+  var downloadsCap = null;
+  (function initDownloads(){
+    try{
+      if(window.claude && typeof window.claude.use === "function"){
+        window.claude.use("downloads").then(function(cap){ downloadsCap = cap; }).catch(function(){ downloadsCap = null; });
+      }
+    }catch(e){ downloadsCap = null; }
+  })();
+
+  function slug(s){
+    return (s||"document").toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"");
+  }
+
+  function flashActionMessage(msg, isError){
+    var el = document.getElementById("actionMsg");
+    if(!el) return;
+    el.textContent = msg;
+    el.style.color = isError ? "#A32A1E" : "#0B5D35";
+    el.style.display = "block";
+    clearTimeout(flashActionMessage._t);
+    flashActionMessage._t = setTimeout(function(){ el.style.display = "none"; }, 6000);
+  }
+
+  /* ---------------------------------------------------------
+     Actions
+  --------------------------------------------------------- */
+  document.getElementById("downloadBtn").addEventListener("click", async function(){
+    var def = DOCS[state.active];
+    var html = buildStandaloneHTML();
+    var filename = slug(def.label) + ".html";
+
+    if(!downloadsCap){
+      flashActionMessage("Downloads aren't available in this view — try \"Try printing directly\" instead, or open this page in a full browser tab.", true);
+      return;
+    }
+    try{
+      await downloadsCap.save({ filename: filename, data: html });
+      flashActionMessage("Saved. Open the downloaded file — it will open the print dialog automatically, or press Ctrl+P / Cmd+P.");
+    }catch(err){
+      var code = err && err.code;
+      if(code === "declined"){ /* user cancelled — no message needed */ }
+      else if(code === "rate_limited"){ flashActionMessage("Please wait a moment and try again.", true); }
+      else { flashActionMessage("Could not save the file. Try \"Try printing directly\" instead.", true); }
+    }
+  });
+
+  document.getElementById("printBtn").addEventListener("click", function(){
+    try{ window.print(); }
+    catch(e){ flashActionMessage("Direct printing isn't available here — use \"Download document to print\" instead.", true); }
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    if(!confirm("Clear all the details you entered for this document?")) return;
+    state.data[state.active] = {};
+    persist();
+    renderAll();
+  });
+
+  var zoom = 1;
+  function applyZoom(){
+    paperEl.style.transform = "scale(" + zoom + ")";
+    paperEl.style.marginBottom = (zoom < 1 ? (zoom-1)*1123 : 0) + "px";
+  }
+  document.getElementById("zoomIn").addEventListener("click", function(){
+    zoom = Math.min(1.15, zoom + 0.1); applyZoom();
+  });
+  document.getElementById("zoomOut").addEventListener("click", function(){
+    zoom = Math.max(0.55, zoom - 0.1); applyZoom();
+  });
+
+  /* fit initial zoom to viewport on small screens */
+  function autoFit(){
+    var wrap = document.querySelector(".paper-wrap");
+    var avail = wrap.clientWidth - 20;
+    var natural = 794;
+    if(avail < natural){
+      zoom = Math.max(0.55, avail / natural);
+      applyZoom();
+    }
+  }
+  window.addEventListener("resize", autoFit);
+
+  renderAll();
+  autoFit();
+
+  var yEl = document.getElementById("footerYear");
+  if(yEl) yEl.textContent = new Date().getFullYear();
+
+})();
+</script>
+</body>
+</html>
